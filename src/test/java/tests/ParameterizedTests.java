@@ -29,8 +29,6 @@ public class ParameterizedTests {
         $(".rt-table").shouldHave(text(value.description));
     }
 
-
-
     //Тест второй
     static Stream<Arguments> contactShouldContainTheEnteredText() {
         return Stream.of(
@@ -47,19 +45,12 @@ public class ParameterizedTests {
         $(".rt-table").shouldHave(text(expectedText));
     }
 
-
-
-
     //Тест третий
     @ParameterizedTest
     @DisplayName("Выдается контакт содержащий введеное значение")
-    @CsvSource(value = {
-            "d",
-            "y",
-    })
-    void TestWithCsvSource (String letter, String expectedText) {
-        $("#searchBox").setValue(letter());
+    @CsvFileSource(resources = "/data.csv", numLinesToSkip = 1)
+    void testWithCsvFileSource(String letter, String expectedText) {
+        $("#searchBox").setValue(letter);
         $(".rt-table").shouldHave(text(expectedText));
     }
 }
-
