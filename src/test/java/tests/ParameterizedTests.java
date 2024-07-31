@@ -22,8 +22,7 @@ public class ParameterizedTests {
 
     //Тест первый
     @EnumSource(Value.class)
-    @ParameterizedTest
-    @DisplayName("Выдается контакт содержащий введеное значение")
+    @ParameterizedTest(name = "Выдается контакт, содержащий введеное значение")
     void contactShouldContainTheEnteredValue(Value value) {
         $("#searchBox").setValue(value.name());
         $(".rt-table").shouldHave(text(value.description));
@@ -37,17 +36,15 @@ public class ParameterizedTests {
                 );
     }
 
-    @MethodSource
-    @ParameterizedTest
-    @DisplayName("Выдается контакт содержащий введеное значение")
-    void contactShouldContainTheEnteredText(Value value, String expectedText) {
-        $("#searchBox").setValue(value.name());
+    @MethodSource("contactShouldContainTheEnteredText")
+    @ParameterizedTest(name = "Выдается контакт, содержащий введеное значение")
+    void contactShouldContainTheEnteredText(String value, String expectedText) {
+        $("#searchBox").setValue(value);
         $(".rt-table").shouldHave(text(expectedText));
     }
 
     //Тест третий
-    @ParameterizedTest
-    @DisplayName("Выдается контакт содержащий введеное значение")
+    @ParameterizedTest(name = "Выдается контакт, содержащий введеное значение")
     @CsvFileSource(resources = "/data.csv", numLinesToSkip = 1)
     void testWithCsvFileSource(String letter, String expectedText) {
         $("#searchBox").setValue(letter);
